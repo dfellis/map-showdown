@@ -1,0 +1,18 @@
+{
+  "name": "map-showdown",
+  "version": "0.0.0",
+  "description": "Performance showdown of mapping an array of values between different mechanisms",
+  "dependencies": {
+    "async": "~0.2.9",
+    "queue-flow": "~0.6.11",
+    "underscore": "~1.4.4",
+    "when": "~2.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node map-showdown.js"
+  },
+  "repository": "",
+  "author": "David Ellis <d.f.ellis@ieee.org>",
+  "license": "MIT"
+}
