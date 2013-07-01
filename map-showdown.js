@@ -11,7 +11,7 @@ for(var i = 0; i < 100000; i++) {
 
 function perfPrint(name, start, end) {
     var time = end - start;
-    var speed = 1000 * 100000 / time;
+    var speed = 1000 * testArray.length / time;
     console.log(name + ' perf: ' + time + 'ms, ' + speed + ' items/sec');
 }
 
@@ -48,18 +48,20 @@ async.series([
         });
     },
     function(done) {
-        var startWhen = Date.now();
-        when.map(testArray, function(val) { return 2*val+1; }).then(function(outWhen) {
-            var endWhen = Date.now();
-            perfPrint('When map', startWhen, endWhen);
+        // queue-flow assumes it can "own" the input array, so make a copy for the tests
+        var testArrayCopy = testArray.slice(0);
+        var startQ = Date.now();
+        q(testArrayCopy).map(function(val) { return 2*val+1; }).toArray(function(outQ) {
+            var endQ = Date.now();
+            perfPrint('Queue-Flow map', startQ, endQ);
             done();
         });
     },
     function(done) {
-        var startQ = Date.now();
-        q(testArray).map(function(val) { return 2*val+1; }).toArray(function(outQ) {
-            var endQ = Date.now();
-            perfPrint('Queue-Flow map', startQ, endQ);
+        var startWhen = Date.now();
+        when.map(testArray, function(val) { return 2*val+1; }).then(function(outWhen) {
+            var endWhen = Date.now();
+            perfPrint('When map', startWhen, endWhen);
             done();
         });
     }
