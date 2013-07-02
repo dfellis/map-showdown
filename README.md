@@ -41,12 +41,12 @@ queue-flow's ``map`` method converts input values into their mapped values synch
 ## Results (on my machine)
 
 ```
-    for loop perf: 7ms, 14285714.285714285 items/sec
-    ES5 map perf: 17ms, 5882352.94117647 items/sec
-    Underscore map perf: 21ms, 4761904.761904762 items/sec
-    Async map perf: 91ms, 1098901.0989010988 items/sec
-    Queue-Flow map perf: 313ms, 319488.8178913738 items/sec
-    When map perf: 2644ms, 37821.482602118005 items/sec
+for loop perf: 6ms, 16666666.666666666 items/sec
+ES5 map perf: 20ms, 5000000 items/sec
+Underscore map perf: 23ms, 4347826.0869565215 items/sec
+Async map perf: 98ms, 1020408.1632653062 items/sec
+Queue-Flow map perf: 206ms, 485436.8932038835 items/sec
+When map perf: 2619ms, 38182.512409316536 items/sec
 ```
 
 So, the theoretical maximum for this operation is about 14Mops/sec in Javascript. ES5/Underscore drops about half an order of magnitude down to about 5-6Mops/sec. Async is a little under an order of magnitude at 1Mops/sec. queue-flow is down another almost order-of-magnitude at 319kops/sec, and When is an order of magnitude slower than that at 38kops/sec.
