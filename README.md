@@ -41,17 +41,15 @@ queue-flow's ``map`` method converts input values into their mapped values synch
 ## Results (on my machine)
 
 ```
-    for loop perf: 7ms, 14285714.285714285 items/sec
-    ES5 map perf: 17ms, 5882352.94117647 items/sec
-    Underscore map perf: 21ms, 4761904.761904762 items/sec
-    Async map perf: 91ms, 1098901.0989010988 items/sec
-    Queue-Flow map perf: 313ms, 319488.8178913738 items/sec
-    When map perf: 2644ms, 37821.482602118005 items/sec
+    for loop perf: 5ms, 20000000 items/sec
+    ES5 map perf: 13ms, 7692307.692307692 items/sec
+    Underscore map perf: 20ms, 5000000 items/sec
+    Async map perf: 81ms, 1234567.9012345679 items/sec
+    Queue-Flow map perf: 83ms, 1204819.2771084337 items/sec
+    When map perf: 2299ms, 43497.172683775556 items/sec
 ```
 
-So, the theoretical maximum for this operation is about 14Mops/sec in Javascript. ES5/Underscore drops about half an order of magnitude down to about 5-6Mops/sec. Async is a little under an order of magnitude at 1Mops/sec. queue-flow is down another almost order-of-magnitude at 319kops/sec, and When is an order of magnitude slower than that at 38kops/sec.
-
-That's with the latest versions of each library. Originally queue-flow was below everything (queue-flow at 0.6.11: 6586ms, 15183.723048891588 items/sec) but is now within spitting distance (less than an order of magnitude) of Async. I don't believe its possible for queue-flow to reach the performance of underscore; reaching parity with Async is the target; then there will be no purpose (besides stylistic preferences) to choose Async of queue-flow.
+That's with the latest versions of each library. Originally queue-flow was below everything (queue-flow at 0.6.11: 6586ms, 15183.723048891588 items/sec) but is now almost perfectly equal to Async. I don't believe its possible for queue-flow to reach the performance of underscore, but now there is no purpose (besides stylistic preferences) to choose Async over queue-flow.
 
 ## License (MIT)
 
