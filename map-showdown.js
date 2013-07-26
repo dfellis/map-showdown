@@ -3,9 +3,10 @@ var async = require('async');
 var when = require('when');
 var whenNodeFn = require('when/node/function');
 var q = require('queue-flow');
+var Q = require('q');
 
 var testArray = [];
-for(var i = 0; i < 100000; i++) {
+for(var i = 0; i < 128990; i++) {
     testArray[i] = i;
 }
 
@@ -62,6 +63,14 @@ async.series([
         when.map(testArray, function(val) { return 2*val+1; }).then(function(outWhen) {
             var endWhen = Date.now();
             perfPrint('When map', startWhen, endWhen);
+            done();
+        });
+    },
+    function(done) {
+        var startQ = Date.now();
+        Q.all(testArray.map(function(val) { return Q.fcall(function() { return 2*val+1; }); })).then(function(outQ) {
+            var endQ = Date.now();
+            perfPrint('Q sorta-map', startQ, endQ);
             done();
         });
     }

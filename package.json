@@ -6,7 +6,8 @@
     "async": "*",
     "queue-flow": "*",
     "underscore": "*",
-    "when": "*"
+    "when": "*",
+    "q": "*"
   },
   "devDependencies": {},
   "scripts": {
