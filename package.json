@@ -1,20 +1,21 @@
 {
-  "name": "map-showdown",
-  "version": "0.0.0",
-  "description": "Performance showdown of mapping an array of values between different mechanisms",
-  "dependencies": {
-    "async": "*",
-    "queue-flow": "*",
-    "underscore": "*",
-    "when": "*",
-    "q": "*"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "node map-showdown.js"
-  },
-  "repository": "",
-  "author": "David Ellis <d.f.ellis@ieee.org>",
-  "license": "MIT",
-  "private": true
+    "name": "map-showdown",
+    "version": "0.0.0",
+    "description": "Performance showdown of mapping an array of values between different mechanisms",
+    "dependencies": {
+        "async": "*",
+        "queue-flow": "*",
+        "underscore": "*",
+        "when": "*",
+        "q": "*"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "build": "clang -std=c99 ./src/map-showdown.c -o ./out/map-showdown && emcc ./src/map-showdown-emscripten.c -o ./out/map-showdown.js",
+        "test": "./out/map-showdown && node ./out/map-showdown.js && node ./lib/map-showdown.js"
+    },
+    "repository": "",
+    "author": "David Ellis <d.f.ellis@ieee.org>",
+    "license": "MIT",
+    "private": true
 }
