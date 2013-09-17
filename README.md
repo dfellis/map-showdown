@@ -41,46 +41,18 @@ queue-flow's ``map`` method converts input values into their mapped values synch
 ## Results (on my machine)
 
 ```
-C for perf: 567ms, speed 176366843033.509705 items/sec
-Emscripten-ified C for perf: 80ms, speed 12500000.000000 items/sec
-for loop perf: 12ms, 10749166.666666666 items/sec
+C for perf: 488ms, speed 204918032.786885 items/sec
+Emscripten-ified C for perf: 72ms, speed 13888888.888889 items/sec
+for loop perf: 16ms, 8061875 items/sec
 ES5 map perf: 13ms, 9922307.692307692 items/sec
-Underscore map perf: 13ms, 9922307.692307692 items/sec
-Async map perf: 109ms, 1183394.495412844 items/sec
-Queue-Flow map perf: 142ms, 908380.2816901408 items/sec
-When map perf: 2808ms, 45936.609686609685 items/sec
-Q sorta-map perf: 4289ms, 30074.60946607601 items/sec
+Underscore map perf: 12ms, 10749166.666666666 items/sec
+Async map perf: 99ms, 1302929.292929293 items/sec
+Queue-Flow map perf: 136ms, 948455.8823529412 items/sec
+When map perf: 2385ms, 54083.85744234801 items/sec
+Q sorta-map perf: 2961ms, 43562.9854778791 items/sec
 ```
 
 That's with the latest versions of each library. Originally queue-flow was below everything (queue-flow at 0.6.11: ``6586ms, 15183.723048891588 items/sec``) but is now almost perfectly equal to Async. I don't believe its possible for queue-flow to reach the performance of underscore, but now there is no purpose (besides stylistic preferences) to choose Async over queue-flow.
-
-## JS performance as a percentage of C performance (on my machine)
-
-Simple math, but I think it should be easily accessible. It also lists how many times slower each JS mechanism is compared to C:
-
-```
-Type                           percentage     times slower
----------------------------    -----------    ----------------
-C for perf                     100.000000%    0
-Emscripten-ified C for perf    0.007088%      14108.3474426808
-for loop perf                  0.006095%      16406.4898550439
-ES5 map perf                   0.005626%      17773.7806762976
-Underscore map perf            0.005626%      17773.7806762976
-Async map perf                 0.000671%      149033.699516649
-Queue-Flow map perf            0.000515%      194154.29661802
-When map perf                  0.000026%      3839351.62608028
-Q sorta-map perf               0.000017%      5864309.33235695
-```
-
-The *best* Javascript can do is run C code via emscripten and still be **fourteen thousand** times slower than the C code. That means in the time emscripten processed one value, native did fourteen thousand of them. A pure JS for loop is **sixteen thousand** times slower than the C code. I suspect the dynamic allocation and resizing of the output array is the source of the difference. Perhaps when V8 gets an asm.js static compiler like Mozilla is building for Firefox this difference will increase.
-
-The ES5 and Underscore pure-synchronous ``map`` mechanisms aren't noticeably slower than a ``for`` loop in V8, so if your target is Node, feel free to use them. Still, it's almost **eighteen thousand** times slower than native.
-
-From there it goes downhill. ``async`` takes roughly **one hundred fifty thousand** times and ``queue-flow`` takes roughly **one hundred ninety thousand** times as long as native -- they're doing their work in a single JS tick (mostly), so this is just the extra overhead of being able to handle asynchronous functions that cross the event loop (and emitting events useful for debugging, in ``queue-flow``'s case).
-
-Once the event loop is *required* (remember this requires a full Javascript context tear-down and set-up between each tick), it becomes silly: ``when`` takes about **three million eight hundred fourty thousand** times as long as native, and ``Q`` takes about *five million eight hundred sixty thousand** times.
-
-There's a reason Node dropped promises from core in its early days.
 
 ## License (MIT)
 

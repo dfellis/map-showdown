@@ -5,8 +5,8 @@
 const int ARRLEN = 100000000;
 
 void perfPrint(char* name, clock_t start, clock_t end) {
-    int time = (end - start) / (CLOCKS_PER_SEC / 1000);
-    double speed = (double)(CLOCKS_PER_SEC) * (double)(ARRLEN) / (double)(time);
+    int time = (end - start) / 1000;
+    double speed = 1000 * (double)(ARRLEN) / (double)(time);
     printf("%s perf: %dms, speed %f items/sec\n", name, time, speed);
 }
 
